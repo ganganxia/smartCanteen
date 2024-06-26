@@ -1,0 +1,54 @@
+-- 创建数据库
+create database smart_canteen;
+
+-- 使用数据库
+use smart_canteen;
+
+-- 用户表
+create table user (
+                      id int unsigned primary key auto_increment comment 'ID',
+                      username varchar(20) not null unique comment '用户名',
+                      password varchar(32)  comment '密码',
+                      nickname varchar(10)  default '' comment '昵称',
+                      email varchar(128) default '' comment '邮箱',
+                      user_pic varchar(128) default '' comment '头像',
+                      create_time datetime not null comment '创建时间',
+                      update_time datetime not null comment '修改时间',
+                      price int unsigned not null comment '余额'
+) comment '用户表';
+
+-- 菜品表
+create table dish(
+                         id int unsigned primary key auto_increment comment 'ID',
+                         title varchar(30) not null comment '菜品名',
+                        content varchar(10000) not null comment '菜品描述',
+                        cover_img varchar(128) not null  comment '菜品图片',
+                        price int unsigned not null comment '菜品价格',
+                        state varchar(5) not null comment '菜品类型',
+                         create_time datetime not null comment '创建时间',
+                         update_time datetime not null comment '修改时间'
+)comment '菜品表';
+
+-- 点餐表
+create table order_dish(
+                         id int unsigned primary key auto_increment comment 'ID',
+                         title varchar(30) not null comment '菜品名',
+                         num int unsigned not null comment '数量',
+                         sum_price int unsigned not null comment '菜品价格',
+                         create_user int unsigned not null comment '创建人',
+                         create_time datetime not null comment '创建时间',
+                         update_time datetime not null comment '修改时间',
+                         constraint fk_category_user foreign key (create_user) references user(id) -- 外键约束
+)comment '点餐表';
+
+-- 订单表
+create table catering(
+                         id int unsigned primary key auto_increment comment 'ID',
+                         title varchar(30) not null comment '菜品名',
+                         num int unsigned not null comment '数量',
+                         sum_price int unsigned not null comment '菜品价格',
+                         create_user int unsigned not null comment '创建人',
+                         create_time datetime not null comment '创建时间',
+                         update_time datetime not null comment '修改时间',
+                         constraint fk_user foreign key (create_user) references user(id) -- 外键约束
+)comment '订单表';
